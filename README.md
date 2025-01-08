@@ -1,1 +1,1 @@
-# 2025LeetCode
+# 2025 LeetCode
