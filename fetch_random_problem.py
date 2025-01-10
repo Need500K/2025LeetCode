@@ -1,6 +1,5 @@
-import requests, random, json, os
+import requests, random, json, os, time
 from enum import Enum
-from datetime import datetime
 
 class DifficultyEnum(Enum):
     EASY = "EASY"
@@ -67,8 +66,8 @@ def fetch_all_problems(difficulty:DifficultyEnum):
         return []
  
 def get_random_problem(problems, solved_ids):
-    today = datetime.now().strftime("%Y-%m-%d")
-    random.seed(today)
+    today = time.strftime("%Y%m%d%H%M")
+    random.seed(int(today))
 
     filtered_problems = [p for p in problems if p["frontendQuestionId"] not in solved_ids and p["paidOnly"]==False]
     if not filtered_problems:
