@@ -28,6 +28,13 @@ jobs:
 
     - name: Commit and push updated solved IDs
       run: |
+        if [ "${{ github.actor }}" == "github-actions[bot]" ]; then
+            git config --global user.name "GitHub Actions"
+            git config --global user.email "github-actions[bot]@users.noreply.github.com"
+        else
+            git config --global user.name "${{ github.actor }}"
+            git config --global user.email "${{ github.actor }}@users.noreply.github.com"
+        fi
         git add solved_ids.json
         git commit -m "Update solved problem IDs"
         git push https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }} HEAD:${{ github.ref }}
