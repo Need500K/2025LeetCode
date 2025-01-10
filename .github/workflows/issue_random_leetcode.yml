@@ -43,8 +43,10 @@ jobs:
       id: read-issue
       run: |
         ISSUE=$(cat issue.json)
-        echo "title=$(echo $ISSUE | jq -r '.title')" >> $GITHUB_OUTPUT"
-        echo "body=$(echo $ISSUE | jq -r '.body')" >> $GITHUB_OUTPUT"
+        TITLE=$(echo $ISSUE | jq -r '.title')
+        BODY=$(echo $ISSUE | jq -r '.body')
+        echo "title=$TITLE" >> $GITHUB_OUTPUT
+        echo "body=$BODY" >> $GITHUB_OUTPUT
 
     - name: Create Issue Action
       uses: dacbd/create-issue-action@main
