@@ -41,8 +41,10 @@ jobs:
         echo "::set-output name=title::$(echo $ISSUE | jq -r '.title')"
         echo "::set-output name=body::$(echo $ISSUE | jq -r '.body')"
 
-    - name: Create GitHub Issue
-      uses: peter-evans/create-issue@v4
+    - name: Create Issue Action
+      uses: nashmaniac/create-issue-action@v1.2
       with:
         title: ${{ steps.read-issue.outputs.title }}
+        token: ${{secrets.GITHUB_TOKEN}}
+        assignees: ${{github.actor}}
         body: ${{ steps.read-issue.outputs.body }}
