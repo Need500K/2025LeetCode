@@ -11,7 +11,7 @@ jobs:
 
     steps:
     - name: Checkout code
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
 
     - name: Set up Python
       uses: actions/setup-python@v4
@@ -43,13 +43,13 @@ jobs:
       id: read-issue
       run: |
         ISSUE=$(cat issue.json)
-        echo "::set-output name=title::$(echo $ISSUE | jq -r '.title')"
-        echo "::set-output name=body::$(echo $ISSUE | jq -r '.body')"
+        echo "{title}={$(echo $ISSUE | jq -r '.title')}" >> $GITHUB_OUTPUT"
+        echo "{body}={$(echo $ISSUE | jq -r '.body')}" >> $GITHUB_OUTPUT"
 
     - name: Create Issue Action
-      uses: nashmaniac/create-issue-action@v1.2
+      uses: dacbd/create-issue-action@main
       with:
-        title: ${{ steps.read-issue.outputs.title }}
         token: ${{secrets.GITHUB_TOKEN}}
+        title: ${{ steps.read-issue.outputs.title }}
         assignees: ${{github.actor}}
         body: ${{ steps.read-issue.outputs.body }}
