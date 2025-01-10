@@ -26,12 +26,12 @@ jobs:
     - name: Fetch random LeetCode problem
       run: python fetch_random_problem.py
 
-    - name: Commit and push updated previous IDs
+    - name: Commit and push updated solved IDs
       run: |
         git config --local user.name "github-actions[bot]"
         git config --local user.email "github-actions[bot]@users.noreply.github.com"
-        git add previous_ids.json
-        git commit -m "Update previous problem IDs"
+        git add solved_ids.json
+        git commit -m "Update solved problem IDs"
         git push
 
     - name: Read issue data
