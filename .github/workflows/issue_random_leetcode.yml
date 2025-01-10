@@ -1,0 +1,48 @@
+name: Create Random LeetCode Issue
+
+on:
+  schedule:
+    - cron: "0 6 * * 6"  # 매주 토요일 오전 6시 실행
+  workflow_dispatch:  # 수동 실행도 가능
+
+jobs:
+  create-issue:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: 3.x
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install requests
+
+    - name: Fetch random LeetCode problem
+      run: python fetch_random_problem.py
+
+    - name: Commit and push updated previous IDs
+      run: |
+        git config --local user.name "github-actions[bot]"
+        git config --local user.email "github-actions[bot]@users.noreply.github.com"
+        git add previous_ids.json
+        git commit -m "Update previous problem IDs"
+        git push
+
+    - name: Read issue data
+      id: read-issue
+      run: |
+        ISSUE=$(cat issue.json)
+        echo "::set-output name=title::$(echo $ISSUE | jq -r '.title')"
+        echo "::set-output name=body::$(echo $ISSUE | jq -r '.body')"
+
+    - name: Create GitHub Issue
+      uses: peter-evans/create-issue@v4
+      with:
+        title: ${{ steps.read-issue.outputs.title }}
+        body: ${{ steps.read-issue.outputs.body }}
