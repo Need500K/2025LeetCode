@@ -2,7 +2,7 @@ name: Create Random LeetCode Issue
 
 on:
   schedule:
-    - cron: "0 6 * * 6"  # 매주 토요일 오전 6시 실행
+    - cron: "0 21 * * 5" # 매주 금요일 오후 9시 UTC = 한국 토요일 오전 6시
   workflow_dispatch:  # 수동 실행도 가능
 
 jobs:
