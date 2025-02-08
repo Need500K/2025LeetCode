@@ -89,7 +89,7 @@ if __name__ == "__main__":
     else:
         solved_ids = []
 
-    problems = fetch_all_problems(DifficultyEnum.MEDIUM)
+    problems = fetch_all_problems(DifficultyEnum.HARD)
     if not problems:
         print("No problems fetched.")
         exit(1)
